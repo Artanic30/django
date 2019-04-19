@@ -4,5 +4,6 @@ from . import views
 
 app_name = 'gsurvey'
 urlpatterns = [
-    path('', views.ListView.as_view(), name='index'),
+    path(r'user', views.Student.as_view(), name='user'),
+    path(r'site', views.Sites.as_view(), name='site')
 ]

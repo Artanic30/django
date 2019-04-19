@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
@@ -5,12 +6,12 @@ from django.db.models.signals import m2m_changed
 
 
 class User(AbstractUser):
-    email = models.EmailField(verbose_name="电子邮箱", unique=True)
-    name = models.CharField(max_length=255, verbose_name="姓名")
-    student_id = models.CharField(max_length=255, verbose_name="学号")
-    school = models.CharField(max_length=255, verbose_name="学院")
-    gender = models.CharField(max_length=1, verbose_name="性别")
-    is_active = models.BooleanField(verbose_name="是否允许选择", default=False)
+    email = models.EmailField(verbose_name="电子邮箱", unique=True, default='test')
+    name = models.CharField(max_length=255, verbose_name="姓名", default='test')
+    student_id = models.CharField(max_length=255, verbose_name="学号", default='test')
+    school = models.CharField(max_length=255, verbose_name="学院", default='test')
+    gender = models.CharField(max_length=1, verbose_name="性别", default='test')
+    is_activate = models.BooleanField(verbose_name="是否允许选择", default=False)
 
 
 class Site(models.Model):
@@ -22,8 +23,11 @@ class Site(models.Model):
 
 # ref: https://stackoverflow.com/questions/20203806/limit-maximum-choices-of-manytomanyfield/20230270
 def students_changed(sender, **kwargs):
-    if kwargs['instance'].students.count() > kwargs['instance'].capacity:
-        raise ValidationError("The site is already full")
+    if kwargs['instance'] in Site.objects.all():
+        if kwargs['instance'].students.count() > kwargs['instance'].capacity:
+            raise ValidationError("The site is already full")
+    else:
+        pass
 
 
 m2m_changed.connect(students_changed, sender=Site.students.through)

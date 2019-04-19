@@ -31,32 +31,34 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'gsurvey.apps.GsurveyConfig',
-    'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'gsurvey.apps.GsurveyConfig',
+    'polls.apps.PollsConfig',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'untitled.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': ['vue/dist']
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -70,8 +72,14 @@ TEMPLATES = [
     },
 ]
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "vue/dist/static")
+]
+
 WSGI_APPLICATION = 'untitled.wsgi.application'
+
 AUTH_USER_MODEL = 'gsurvey.User'
+
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
