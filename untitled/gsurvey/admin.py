@@ -10,6 +10,6 @@ class SiteAdmin(admin.ModelAdmin):
     ]
     filter_horizontal = ('students',)
 
-// testcode
+// testcode 23333
 admin.site.register(User, UserAdmin)
 admin.site.register(Site, SiteAdmin)
